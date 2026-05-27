@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EventSnap - Event Gallery</title>
+<!-- Fonts and Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container-high": "#dce9ff",
+                    "primary-fixed": "#e9ddff",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#494454",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#6d3bd7",
+                    "on-background": "#0b1c30",
+                    "on-primary-container": "#fffbff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#5a4139",
+                    "on-primary-fixed": "#23005c",
+                    "primary": "#6b38d4",
+                    "secondary-fixed-dim": "#e3bfb4",
+                    "on-tertiary-container": "#fffbff",
+                    "secondary-container": "#fdd8cc",
+                    "on-tertiary-fixed-variant": "#673d00",
+                    "surface": "#f8f9ff",
+                    "surface-container": "#e5eeff",
+                    "secondary": "#745850",
+                    "on-secondary-fixed": "#2a1710",
+                    "surface-bright": "#f8f9ff",
+                    "inverse-primary": "#d0bcff",
+                    "tertiary": "#855000",
+                    "surface-variant": "#d3e4fe",
+                    "primary-container": "#8455ef",
+                    "tertiary-fixed-dim": "#ffb869",
+                    "secondary-fixed": "#ffdbd0",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#785c54",
+                    "surface-dim": "#cbdbf5",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "surface-container-low": "#eff4ff",
+                    "inverse-surface": "#213145",
+                    "outline": "#7b7486",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#a76500",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#5516be",
+                    "tertiary-fixed": "#ffdcbb",
+                    "on-tertiary-fixed": "#2c1700",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "outline-variant": "#cbc3d7",
+                    "primary-fixed-dim": "#d0bcff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "container-padding-desktop": "64px",
+                    "container-padding-mobile": "20px",
+                    "base": "8px",
+                    "stack-lg": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0px 10px 30px rgba(107, 56, 212, 0.04);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .masonry-item:hover .overlay {
+            opacity: 1;
+        }
+        .active-filter {
+            background-color: #6b38d4;
+            color: #ffffff;
+        }
+        .lightbox-active {
+            display: flex !important;
+        }
+        /* Custom scrollbar for better aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8f9ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbc3d7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b38d4;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant/20 shadow-sm">
+<div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto">
+<div class="font-display-lg text-display-lg font-extrabold text-primary tracking-tight">EventSnap</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Create Event</a>
+<a class="text-primary font-bold border-b-2 border-primary font-label-sm text-label-sm" href="#">Dashboard</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-sm text-label-sm hover:scale-95 transition-transform">Login</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="pt-32 pb-20 px-gutter max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-end md:items-center gap-6 mb-12">
+<div>
+<span class="text-primary font-label-sm text-label-sm uppercase tracking-widest mb-2 block">June 15, 2024</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">The Grand Gala: Aurora Tech Summit</h1>
+<p class="text-on-surface-variant mt-2 font-body-md text-body-md">Capturing the future of innovation at Skyview Hall.</p>
+</div>
+<button class="group flex items-center gap-2 bg-surface-container-low border border-primary/20 text-primary px-6 py-3 rounded-xl hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-sm text-label-sm">
+<span class="material-symbols-outlined">download</span>
+                Download All (ZIP)
+            </button>
+</header>
+<!-- Filter Bar -->
+<div class="flex flex-wrap items-center gap-3 mb-8">
+<button class="active-filter px-6 py-2 rounded-full font-label-sm text-label-sm border border-outline-variant/30 transition-all hover:border-primary" id="filter-all" onclick="filterMedia('all')">All Photos</button>
+<button class="bg-surface-container-lowest text-on-surface-variant px-6 py-2 rounded-full font-label-sm text-label-sm border border-outline-variant/30 transition-all hover:border-primary" id="filter-pro" onclick="filterMedia('pro')">Professional (Media Crew)</button>
+<button class="bg-surface-container-lowest text-on-surface-variant px-6 py-2 rounded-full font-label-sm text-label-sm border border-outline-variant/30 transition-all hover:border-primary" id="filter-guest" onclick="filterMedia('guest')">Guests</button>
+</div>
+<!-- Gallery Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gallery">
+<!-- Professional Photo -->
+<div class="masonry-item pro group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-[4/5] transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-1', 'Julianne V.', 'Professional Crew', '14:22')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="A high-end professional photograph of a luxury gala ballroom event. The lighting is dramatic and warm, with purple and indigo spotlights creating a celebratory tech atmosphere. Guests in formal attire are seen blurred in the background, focusing on a crystal centerpiece on a table in the foreground. The style is polished, cinematic, and evokes premium quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7nye7_PrCLh16U2LSvTsz8Z4hEfRyK7IMu_8l9prA59FMaqi1F7vbb_dP9MXHnavww9Pxy7f_J_0c25S6BWcaCPDfem4EfxSfS3o_5QEQmlzmJTP6wSSWWM-sHZ1dWiP2QbhSPH3HUhKnOA-w-3iCK9SQL3myTTOCSDXE3gWsu6xFDbQXF2QgYFDeIr3tIAO2Atz_UvGt9nUVs38M6caqGlcsjh_PMz6QP3byeWisssyqh-w3u98bbwCpYcsMK6gzDePGENSQWIUT"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">Julianne V.</span>
+<span class="text-on-primary/70 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Professional
+                    </span>
+</div>
+</div>
+<!-- Guest Photo -->
+<div class="masonry-item guest group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-square transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-2', 'Marcus Chen', 'Guest', '15:45')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="A vibrant candid shot taken by a guest at a high-tech event. People are laughing and cheering under dynamic purple stage lights. The image has a raw, authentic energy with slight motion blur to convey movement and excitement. The color palette is dominated by vivid violets and deep shadows, maintaining a premium tech-celebration aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvYFES81IRCQpDcJi0d9NpLAWOJvnboQpRNUOQccqUsR4b5FNXmdd1c32Jbmmb9A9EBKXXbjwnH4IzqI4e97I4Nj_tUFtfUuvJq62_TrKTbM74M9APpLAPH2qP0PRc_4AMozVUwPA1t4Cpj5u-rwovOkofDOr9aBbKN87FX8Mwk2IFeY3dj-5b0qBix_bcuBvpT2dHOvmAk2kgMmxXPbzdaapUdfGwO7-UPrtuXPLT_2LQT_7FhM-pLXw6c-w_4mquSpg3KQFJEJXZ"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">Marcus Chen</span>
+<span class="text-on-primary/70 text-xs">Guest</span>
+</div>
+</div>
+<!-- Professional Photo 2 -->
+<div class="masonry-item pro group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-square transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-3', 'David Smith', 'Professional Crew', '13:10')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="A wide-angle professional shot of an event auditorium filled with professionals. A large screen displays abstract generative art in shades of purple and blue. The room is brightly lit with high-key architectural lighting, emphasizing the clean, airy, and expansive feel of the venue. The overall mood is sophisticated, professional, and forward-thinking." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApHfhwqFOwbqN6e-SUd1tqdud8XDhbN29DY4eg7rHhpDZ7NKMZ_0RY-YTA0cBKewd4P-YYsyLQw3xXzR1xJUNeWFXjQ-gcB4qwUTcXVpcaDdR6EKKQHynAnsQnuD_5LEslS5SyRvluYH11avj_cTRPJGMkgo-1f6EfLt4dJih3z6l8d-PUHpTc4i3J9KDRIAezNmKBzw7C2Z8hS0kDQio_j3ttEfJ4BXFr4Tek7uNYhyzyplbzIQWrJNet1oLa6Ny7NJhXhF3YvC_O"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">David Smith</span>
+<span class="text-on-primary/70 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Professional
+                    </span>
+</div>
+</div>
+<!-- Guest Photo 2 -->
+<div class="masonry-item guest group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-[3/4] transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-4', 'Elena Rossi', 'Guest', '16:20')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="A high-quality smartphone photo of an elegant catering setup at a corporate gala. Small, beautifully plated hors d'oeuvres are arranged on a minimalist glass tray. In the background, the soft bokeh effect blurs out high-end event decor in tones of gold and white. The lighting is soft and natural, creating a clean, airy, and inviting atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzb3ztrdASoC_XbcZLqTiqLe9lVbLf1ywYnNTuGLVtveHljd4biYkXRJbI6xH_er4O4iRKSF74q7GHIIEQEdFiUDK_5_WIuidxFaKIVsE40hUCpbU3Lv1pxzUBGGPbNGbzmpeMvAZ43BLzc-HPAEC5oS9dQE3VDPwHz35oybt_WvndiG8nori9et8X3-6N1bvmonsx6tSuaXkIfkhBrgATlEx42lC7AhkT7URKdMMAcMHuLtukX55rl2osh8BfKgbR24p6Nv_kFN72"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">Elena Rossi</span>
+<span class="text-on-primary/70 text-xs">Guest</span>
+</div>
+</div>
+<!-- More photos to populate the grid -->
+<div class="masonry-item pro group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-video transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-5', 'Julianne V.', 'Professional Crew', '17:05')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="A professional capture of a keynote speaker on a minimalist stage. The background features a large glowing LED wall with vibrant indigo gradients. The speaker is illuminated by a sharp spotlight, creating a dramatic and prestigious look. The overall aesthetic is clean, tech-focused, and premium, with a strong focus on high-quality event production." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtJC7-6nWo9ZNA_rmyDUqZVE5FX0zJIXfYjd_cJCE7HQVrevPaVj5pc9-HTQo18fB5GbyzDMm2h_Fv8TGToDVAVHjuasrtW9UtZ7-uv4f2PtasI7IDm3WFuYm3ziRSYTL7NMz2VYpBIolf6tamDNPuQPK67SZ4NGWRcIsTp28eqYjg3fSmx_81v6w6RhyekrM5QXPjZM8JsGOHGJhM29b5Jb7XyOcSnYWci22cTYS9n1cPv_j1tuaPlr1d1mr-_QClM94CQVsEiEAl"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">Julianne V.</span>
+<span class="text-on-primary/70 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Professional
+                    </span>
+</div>
+</div>
+<div class="masonry-item pro group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-square transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-6', 'David Smith', 'Professional Crew', '11:45')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="A crisp, high-end photograph of event attendees networking in a bright, modern glass atrium. The architecture is minimal with white steel and large glass panes. The lighting is natural and airy, creating a feeling of transparency and openness. The people are dressed in smart-casual business attire, and the mood is energetic yet refined." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACd6rNPXs0C96CTiAo8qQh9TkqN7zVjUyi7YjjVgihknuFlOe-J52T-S2n-s-26FOJvqd85LacfNYnVVTtBODoj5cbiHsMD1AvG8FGBxFzwTWawhHs4slRvmB6K-m_nWCuQkTUz_8TBMpRIZ-lm-W7sdOFwNEiDYKCICpaNl-b5vurTvRMFRh8kU54Z1pa9nbxacY7Y3om1moM6c68Clyvb0SY_aOPQrQVsOj9Y8HG6Xdf7PFPT0WRC4JHmg5L7tmUQHA9sr4lkdSu"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">David Smith</span>
+<span class="text-on-primary/70 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Professional
+                    </span>
+</div>
+</div>
+<div class="masonry-item guest group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-square transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-7', 'Sarah J.', 'Guest', '19:15')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="An energetic guest photo of friends laughing together at a celebratory gala dinner. They are holding cocktails that catch the vibrant purple and blue ambient lighting. The background is filled with soft-focus bokeh of festive decorations. The image captures a moment of genuine joy and human connection within a premium technology-themed event." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOv3N-HAZynp_nm2HH5UwQ6wFQ0yezeVDCex3tO86cXiTZGyQBDwYjOGOtrmGCGq9afUjD0jv7ZsD32g900aHWRd_Ak4fI4CxAw5jPdodGVQyEOGIChauYAzMAOy1_vKQUx-OUIPpPcnnMpIi9dxTXgi2oMcAIlf-ekUOhkb1vLggwZCBI4lFtcrmazHedeAH6qxY2koIH39K6YLl2azlp0UcFzxkrGImLFgQ4aoYvdiIqAHx9UMgp-wUk6EYY2rmqrPqTOQ8Ll7UG"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">Sarah J.</span>
+<span class="text-on-primary/70 text-xs">Guest</span>
+</div>
+</div>
+<div class="masonry-item pro group relative glass-card rounded-lg overflow-hidden cursor-pointer aspect-[3/4] transition-transform duration-500 hover:-translate-y-2" onclick="openLightbox('image-8', 'Julianne V.', 'Professional Crew', '21:30')">
+<img alt="" class="w-full h-full object-cover rounded-[1.5rem] p-2" data-alt="A breathtaking night-time professional photo of the event venue's exterior. The building is a modern architectural masterpiece with sharp lines and glass walls, illuminated from within by glowing violet lights. The surrounding area is clean and minimalist, with the dark night sky providing a stark contrast to the vibrant, energetic event occurring inside." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA94EX0LA0yt2QWRLuhn0SwB1HLvizVXedDdYoHZrwmV7AkCIqhS2KwrTE1QTfutjrF0Qs7hHUHEILOUUUVkil7y4ufp37WHBO3gVgZdQgPREF73rw_za4Z9j7TN3N-t8rn8RTy6o2mpYCqIVao0gTz9SJfgAoTFmwCu4R_MkmtJEd5A0xYgKoOFZS1cNnFIuhbPo5BMritakYgiQycXigjRrO8Mp_qVM6FtIQ9D8lXKbO0PRyn6mc7hmwNG-6vpVgQclL_b_KP7Kel"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-on-primary font-label-sm text-label-sm mb-1">Julianne V.</span>
+<span class="text-on-primary/70 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Professional
+                    </span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto bg-surface-container-lowest border-t border-outline-variant/20">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-gutter py-stack-lg max-w-7xl mx-auto items-center">
+<div class="font-headline-md text-headline-md font-bold text-primary">EventSnap</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Product</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Weddings</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Corporate</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Get the QR</a>
+</div>
+<div class="text-on-surface-variant text-right font-label-sm text-label-sm">
+                © 2024 EventSnap Cloud. All rights reserved.
+            </div>
+</div>
+</footer>
+<!-- Lightbox Modal -->
+<div class="fixed inset-0 z-[100] hidden bg-on-surface/95 backdrop-blur-2xl flex-col items-center justify-center p-4 md:p-12 animate-in fade-in duration-300" id="lightbox">
+<button class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors" onclick="closeLightbox()">
+<span class="material-symbols-outlined text-4xl">close</span>
+</button>
+<div class="relative max-w-5xl w-full h-full flex flex-col items-center justify-center">
+<img alt="High resolution preview" class="max-h-[819px] w-auto object-contain rounded-lg shadow-2xl" id="lightbox-img" src=""/>
+<div class="mt-8 w-full flex justify-between items-end text-white">
+<div>
+<h3 class="font-headline-md text-headline-md" id="lightbox-uploader">Uploader Name</h3>
+<div class="flex gap-4 mt-1 opacity-70 font-label-sm text-label-sm">
+<span class="flex items-center gap-1" id="lightbox-role">Role</span>
+<span class="flex items-center gap-1" id="lightbox-time">
+<span class="material-symbols-outlined text-xs">schedule</span>
+                            12:00
+                        </span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="bg-white/10 hover:bg-white/20 p-4 rounded-full transition-all">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">download</span>
+                        Original HQ
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        function filterMedia(category) {
+            const items = document.querySelectorAll('.masonry-item');
+            const buttons = document.querySelectorAll('[id^="filter-"]');
+            
+            // Update buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('active-filter', 'bg-primary', 'text-on-primary');
+                btn.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+            });
+            
+            const activeBtn = document.getElementById(`filter-${category}`);
+            activeBtn.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+            activeBtn.classList.add('active-filter');
+
+            // Filter items
+            items.forEach(item => {
+                item.style.display = 'block';
+                item.classList.add('animate-in', 'zoom-in-95', 'duration-300');
+                
+                if (category !== 'all' && !item.classList.contains(category)) {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openLightbox(imgId, uploader, role, time) {
+            const lightbox = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            const lbUploader = document.getElementById('lightbox-uploader');
+            const lbRole = document.getElementById('lightbox-role');
+            const lbTime = document.getElementById('lightbox-time');
+
+            // Find the image source from the clicked item
+            const sourceImg = event.currentTarget.querySelector('img').src;
+            
+            lbImg.src = sourceImg;
+            lbUploader.innerText = uploader;
+            lbRole.innerText = role;
+            lbTime.innerHTML = `<span class="material-symbols-outlined text-xs">schedule</span> ${time}`;
+
+            lightbox.classList.add('lightbox-active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('lightbox-active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Simple parallax effect for grid items on scroll
+        window.addEventListener('scroll', () => {
+            const items = document.querySelectorAll('.masonry-item');
+            const scrolled = window.pageYOffset;
+            
+            items.forEach((item, index) => {
+                const speed = 0.05 + (index % 3) * 0.02;
+                const yPos = -(scrolled * speed);
+                // Subtle lift only
+                if (window.innerWidth > 768) {
+                    item.style.transform = `translateY(${Math.max(yPos / 10, -20)}px)`;
+                }
+            });
+        });
+    </script>
+</body></html>

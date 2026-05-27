@@ -1,0 +1,55 @@
+# EventSnap Cloud - Apache Configuration
+# Ensures clean URLs, security headers, and proper error handling
+
+Options -Indexes
+
+# ─── PHP ERROR HANDLING ──────────────────────────────────────────────────────
+# Suppress PHP errors from being shown to users (prevents output-before-headers 500s)
+php_flag display_errors Off
+php_flag log_errors On
+
+# ─── SECURITY HEADERS ────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ─── FORCE HTTPS (uncomment on live server) ──────────────────────────────────
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteCond %{HTTPS} off
+#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# ─── CUSTOM ERROR PAGES ──────────────────────────────────────────────────────
+# ErrorDocument 404 /404.php
+# ErrorDocument 500 /500.php
+
+# ─── CACHE CONTROL FOR ASSETS ────────────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# ─── PROTECT SENSITIVE FILES ─────────────────────────────────────────────────
+<FilesMatch "(composer\.json|composer\.lock|database\.sql|\.env)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ─── PROTECT CONFIG DIRECTORY ────────────────────────────────────────────────
+# Block direct web access to /config/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^vendor/ - [F,L]
+    RewriteRule ^src/ - [F,L]
+</IfModule>

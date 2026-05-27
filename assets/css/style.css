@@ -1,0 +1,524 @@
+/* 
+ * EventSnap Cloud - Premium UI/UX Design System Stylesheet
+ * Custom Light Lavender Theme with Vibrant Violet Accents
+ * Modeled directly on high-trust modern SaaS layouts.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #FFFFFF;
+    --color-brand: #7C3AED;
+    --color-brand-hover: #6D28D9;
+    --color-brand-light: #F5F3FF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border-color: #E2E8F0;
+    --border-color-active: #C7D2FE;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    --shadow-lg: 0 20px 25px -15px rgba(124, 90, 237, 0.08), 0 10px 10px -10px rgba(124, 90, 237, 0.04);
+    --shadow-premium: 0 12px 30px -12px rgba(124, 58, 237, 0.12), 0 4px 12px -4px rgba(0, 0, 0, 0.02);
+}
+
+/* Light / Dark Mode - Overrides if toggled, but Light Theme is default */
+body.dark-mode {
+    --bg-primary: #0F0F16;
+    --bg-secondary: #181824;
+    --color-brand: #A78BFA;
+    --color-brand-hover: #C4B5FD;
+    --color-brand-light: #2E2546;
+    --text-main: #F1F5F9;
+    --text-muted: #94A3B8;
+    --border-color: #2D3748;
+    --border-color-active: #4A5568;
+    --shadow-lg: 0 20px 25px -15px rgba(0, 0, 0, 0.5);
+    --shadow-premium: 0 12px 30px -12px rgba(0, 0, 0, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+/* ─── GLOBAL RESPONSIVE SAFETY ─────────────────────────────────────────────── */
+html, body {
+    overflow-x: hidden;   /* Prevent horizontal scroll on any screen */
+    max-width: 100vw;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── GLASS CARD (used across all dashboard pages) ──────────────────────────── */
+.glass-card {
+    background: #ffffff;
+    border: 1px solid #e5e7f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px -4px rgba(107, 56, 212, 0.06), 0 1px 4px rgba(0,0,0,0.03);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.glass-card:hover {
+    box-shadow: 0 8px 28px -8px rgba(107, 56, 212, 0.12), 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* ─── SHADOW UTILITIES ───────────────────────────────────────────────────────── */
+.shadow-premium {
+    box-shadow: var(--shadow-premium);
+}
+
+/* ─── LINK DECORATION RESET ─────────────────────────────────────────────────── */
+.no-underline, .text-decoration-none {
+    text-decoration: none !important;
+}
+
+/* ─── RESPONSIVE TABLE HELPER ───────────────────────────────────────────────── */
+@media (max-width: 767px) {
+    .table-responsive-stack {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* Sidebar Layout */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.sidebar-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: var(--color-brand);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px 32px;
+    text-decoration: none !important;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-decoration: none !important;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.sidebar-link i {
+    font-size: 1.15rem;
+}
+
+.sidebar-link:hover {
+    color: var(--text-main);
+    background-color: var(--color-brand-light);
+}
+
+.sidebar-link.active {
+    background-color: var(--color-brand);
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 12px;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Custom Header */
+.top-navbar {
+    height: 72px;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 90;
+}
+
+/* Premium Buttons */
+.btn-brand {
+    background-color: var(--color-brand);
+    color: #FFFFFF !important;
+    border: none;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 10px 24px;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.2);
+    transition: all 0.2s ease;
+}
+
+.btn-brand:hover {
+    background-color: var(--color-brand-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+}
+
+.btn-brand-outline {
+    background-color: transparent;
+    color: var(--color-brand) !important;
+    border: 1px solid var(--color-brand);
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 10px 24px;
+    transition: all 0.2s ease;
+}
+
+.btn-brand-outline:hover {
+    background-color: var(--color-brand-light);
+    transform: translateY(-1px);
+}
+
+.btn-pill-outline {
+    background-color: var(--bg-secondary);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.btn-pill-outline:hover, .btn-pill-outline.active {
+    background-color: var(--color-brand);
+    color: #FFFFFF !important;
+    border-color: var(--color-brand);
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.15);
+}
+
+/* Premium Cards */
+.premium-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:hover {
+    box-shadow: var(--shadow-premium);
+    border-color: var(--border-color-active);
+}
+
+.premium-card-accent {
+    border: 2px solid var(--color-brand) !important;
+    box-shadow: var(--shadow-premium) !important;
+}
+
+/* Form Styles */
+.form-control-premium {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 12px 16px;
+    transition: all 0.25s ease;
+}
+
+.form-control-premium:focus {
+    background-color: var(--bg-secondary);
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    outline: none;
+}
+
+/* Tables styling */
+.premium-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.premium-table th {
+    background-color: #F8FAFC;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.premium-table td {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Custom Status Pills */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-pill.live {
+    background-color: #DEF7EC;
+    color: #03543F;
+}
+
+.status-pill.archived {
+    background-color: #E1EFFE;
+    color: #1E429F;
+}
+
+.status-pill.upcoming {
+    background-color: #FEF08A;
+    color: #713F12;
+}
+
+/* Uploader UI Styles */
+.guest-camera-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 48px 32px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.guest-camera-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-premium);
+    border-color: var(--color-brand);
+}
+
+.guest-camera-card:hover .camera-circle {
+    background-color: var(--color-brand);
+    color: #FFFFFF;
+    transform: scale(1.05);
+}
+
+.camera-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #EEF2FF;
+    color: var(--color-brand);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-trigger-pill {
+    background-color: #FFF1F2;
+    color: #9F1239;
+    font-weight: 600;
+    border-radius: 50px;
+    border: none;
+    width: 100%;
+    padding: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.gallery-trigger-pill:hover {
+    background-color: #FFE4E6;
+    transform: translateY(-1px);
+}
+
+/* Landing Page Layouts */
+.hero-image-wrapper {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.hero-image-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 50px;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.hero-badge-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-brand);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+/* Gallery Grid Masonry Style */
+.masonry-gallery {
+    column-count: 4;
+    column-gap: 24px;
+}
+
+@media (max-width: 1200px) {
+    .masonry-gallery { column-count: 3; }
+}
+@media (max-width: 768px) {
+    .masonry-gallery { column-count: 2; }
+}
+@media (max-width: 480px) {
+    .masonry-gallery { column-count: 1; }
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 24px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.masonry-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.masonry-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-premium);
+}
+
+/* Custom Progress Bar for Storage */
+.premium-progress {
+    height: 8px;
+    background-color: #E2E8F0;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.premium-progress-bar {
+    height: 100%;
+    background-color: var(--color-brand);
+    border-radius: 50px;
+}
+
+/* Welcome Page Layout */
+.welcome-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 64px 16px;
+}
+
+.wedding-thumbnails {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 8px 0;
+}
+
+.wedding-thumbnail-card {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 18px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+}
+
+.wedding-thumbnail-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wedding-thumbnail-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

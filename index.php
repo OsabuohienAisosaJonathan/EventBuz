@@ -1,0 +1,375 @@
+<?php
+/**
+ * EventSnap Cloud - Premium Landing Page (Tailwind Theme Parity)
+ */
+require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/src/Auth.php';
+
+$isLoggedIn = Auth::isLoggedIn();
+$userName = $_SESSION['user_name'] ?? '';
+$userRole = $_SESSION['user_role'] ?? '';
+?>
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>EventSnap Cloud | Capture Every Moment, Instantly</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container-high": "#dce9ff",
+                    "primary-fixed": "#e9ddff",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#494454",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#6d3bd7",
+                    "on-background": "#0b1c30",
+                    "on-primary-container": "#fffbff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#5a4139",
+                    "on-primary-fixed": "#23005c",
+                    "primary": "#6b38d4",
+                    "secondary-fixed-dim": "#e3bfb4",
+                    "on-tertiary-container": "#fffbff",
+                    "secondary-container": "#fdd8cc",
+                    "on-tertiary-fixed-variant": "#673d00",
+                    "surface": "#ffffff",
+                    "surface-container": "#ffffff",
+                    "secondary": "#745850",
+                    "on-secondary-fixed": "#2a1710",
+                    "surface-bright": "#ffffff",
+                    "inverse-primary": "#d0bcff",
+                    "tertiary": "#855000",
+                    "surface-variant": "#d3e4fe",
+                    "primary-container": "#8455ef",
+                    "tertiary-fixed-dim": "#ffb869",
+                    "secondary-fixed": "#ffdbd0",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#785c54",
+                    "surface-dim": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "background": "#ffffff",
+                    "surface-container-low": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "outline": "#7b7486",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#a76500",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#5516be",
+                    "tertiary-fixed": "#ffdcbb",
+                    "on-tertiary-fixed": "#2c1700",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "outline-variant": "#cbc3d7",
+                    "primary-fixed-dim": "#d0bcff"
+              },
+              "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+              },
+              "spacing": {
+                    "gutter": "24px",
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "container-padding-desktop": "64px",
+                    "container-padding-mobile": "20px",
+                    "base": "8px",
+                    "stack-lg": "32px"
+              },
+              "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+              },
+              "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0px 10px 30px rgba(107, 56, 212, 0.04);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 5s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary/20">
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant/20 dark:border-outline/10 shadow-sm">
+        <div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
+            <div class="flex items-center gap-2">
+                <span class="font-display-lg text-headline-md font-extrabold text-primary tracking-tight">EventSnap</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <?php if ($isLoggedIn): ?>
+                    <?php
+                    $dashUrl = 'dashboard.php';
+                    if ($userRole === 'admin') $dashUrl = 'admin.php';
+                    elseif ($userRole === 'crew') $dashUrl = 'media-crew.php';
+                    ?>
+                    <a class="text-primary font-bold border-b-2 border-primary font-label-sm text-label-sm" href="<?php echo $dashUrl; ?>">Dashboard</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="create-event.php">Create Event</a>
+                <?php else: ?>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="login.php">Dashboard</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="register.php">Create Event</a>
+                <?php endif; ?>
+            </div>
+            <div class="flex items-center gap-4">
+                <?php if ($isLoggedIn): ?>
+                    <a href="logout.php" class="px-6 py-2 rounded-full font-label-sm text-label-sm transition-all text-primary hover:bg-primary/5 text-center text-decoration-none">Logout</a>
+                    <a href="create-event.php" class="px-6 py-2 rounded-full bg-primary text-on-primary font-label-sm text-label-sm hover:opacity-90 shadow-lg shadow-primary/20 transition-all scale-98 active:scale-95 text-center text-decoration-none">Create Your Event</a>
+                <?php else: ?>
+                    <a href="login.php" class="px-6 py-2 rounded-full font-label-sm text-label-sm transition-all text-primary hover:bg-primary/5 text-center text-decoration-none">Login</a>
+                    <a href="register.php" class="px-6 py-2 rounded-full bg-primary text-on-primary font-label-sm text-label-sm hover:opacity-90 shadow-lg shadow-primary/20 transition-all scale-98 active:scale-95 text-center text-decoration-none">Create Your Event</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 overflow-hidden min-h-screen flex items-center">
+        <!-- Background Accents -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent -z-10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-tr from-secondary/5 to-transparent -z-10 blur-3xl"></div>
+        <div class="max-w-7xl mx-auto px-gutter grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+                    <span class="material-symbols-outlined text-[18px]">celebration</span>
+                    <span>New: Live AI Photo Curation</span>
+                </div>
+                <h1 class="font-display-lg text-display-lg leading-[1.1] text-on-surface">
+                    Capture Every Moment, <span class="text-primary italic">Instantly.</span>
+                </h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-[540px]">
+                    The smartest way to collect event photos. No app required. Just scan, snap, and share. Your wedding or corporate gala deserves professional-grade ease.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="<?php echo $isLoggedIn ? 'create-event.php' : 'register.php'; ?>" class="px-8 py-4 rounded-full bg-primary text-on-primary font-headline-md text-headline-md flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-primary/20 transition-all group text-center text-decoration-none">
+                        Create Your Event
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="pricing.php" class="px-8 py-4 rounded-full glass-card text-on-surface font-headline-md text-headline-md flex items-center justify-center gap-2 hover:bg-surface-container-low transition-all text-center text-decoration-none">
+                        <span class="material-symbols-outlined">play_circle</span>
+                        See How it Works
+                    </a>
+                </div>
+                <div class="flex items-center gap-6 pt-8 border-t border-outline-variant/30">
+                    <div class="flex -space-x-3">
+                        <img class="w-10 h-10 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJKJRxTshPtuouFFSgsQpWtqNd3GXDQgPCWh4Lz-2h2b4t7tgJvojLGPeINa0WwJNSI1T6uO4IrSfGF--TW6RhAHDbx4QKP_b85o6Njib_Uuukh5AvlWVDe9A4AEhx6eMDzHJODT9rjTn7KgwfxKMOY3xDXFSyY8n1BHCHu05h-O7ClXLglHHR-YYdwSGeJiI1b3ZFAq4mBMOn3e5Rj5e6m2KdEYu5mVJl7JWwm4h7XM784K_X9BjOKGafMgDyp7wBBkODUCT9COuH"/>
+                        <img class="w-10 h-10 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtRAuKbLAli-cxxPCjfMYbq01HTzp-n-RmAmJPj0Srs_IrS_wheRbAUqjdvqI2tOyXM7Nk5KS_jxIg2wh5MYUg7GhVC2WN3DPwJhvxOSNGx6FGBWki8_FeoEtfI3bfKwfnkVzisZS0yGqvHgxBzRE-v4FCehUa5PTrNzI306lcsMs3HBFaDJ2jiCcPVR-_JTjA6QCWQlCxTsmFSr-8pQGZAnmxUFVuYl4Uf0IvyIS1szjgjJuaOG8bvW_rBs33IFZrWLBLIZ1lBLo-"/>
+                        <img class="w-10 h-10 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnQs7Dh2byfgQqxRoC3lYPHoAY9iJipu9r7EZIVfEHe0Y3wUE3N12jgXxbpfP82MZBedwMF_hkDJuh-Xm5XKkIwYfBIlpO__2a1VJudLmRBugjPxnnYElEapPX7xnoZYoRGpo4gbSeLl1AYdFvKCZpTraJkZldk7bYLe2_nIkUw5xStlN0VmOcsalt4YZemQh4k5WoRyNgy5ISMzee9mW2Vle5g8aejAdhg1Sw0dwjCZJPaISEuY0DUsar9L1y1s6b8qgSRFdHy9Ip"/>
+                    </div>
+                    <p class="text-on-surface-variant font-label-sm text-label-sm">Trusted by <span class="font-bold text-on-surface">10,000+</span> event hosts</p>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="relative z-10 glass-card p-6 rounded-xl animate-float">
+                    <img class="rounded-lg w-full h-[500px] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLPwMGDjqiowv3DHuxwfGO7LyQZ_iV8Tn5fPUrWbnTd-8Qs6c-SZVKuNL-5o0LZiK5k_skobWTp7jAuN2mDoLOrLHu3a-HyCHyULHBg_fFsvvFor_7gdxgvmbhrfSQpOSrkbsUkvbWdrlE1r5Jxn8YNBtxzB-6E74MG4g9C2nNNDfPpsN7WevEkWFzkrJSVd-NZ8985jbFSN_PIBiUXOnyxmrbiHxijB_ZjGWCkv40mYzTvV67On_lzgpbss8Y2aRW9v5zQsGOWF_z"/>
+                    <div class="absolute -bottom-6 -left-6 glass-card p-4 rounded-xl max-w-[200px] border-l-4 border-primary">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">qr_code_2</span>
+                            <span class="font-label-sm text-label-sm">Scan to Snap</span>
+                        </div>
+                        <p class="text-xs text-on-surface-variant">Instant access. No downloads. Full resolution.</p>
+                    </div>
+                </div>
+                <!-- Decorative Elements -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-10 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bento Grid Features Section -->
+    <section class="py-24 bg-surface-container-low w-full">
+        <div class="max-w-7xl mx-auto px-gutter">
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="font-display-lg text-headline-lg text-on-surface">Simplicity Meets Sophistication</h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">Everything you need to turn guest photos into your event's greatest asset.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[240px]">
+                <!-- Feature 1: QR -->
+                <div class="md:col-span-8 glass-card p-10 rounded-xl flex flex-col justify-between group overflow-hidden relative">
+                    <div class="relative z-10">
+                        <span class="p-3 bg-primary/10 rounded-full text-primary mb-6 inline-block">
+                            <span class="material-symbols-outlined text-[32px]">qr_code_scanner</span>
+                        </span>
+                        <h3 class="font-headline-lg text-headline-md mb-2">Instant QR Generation</h3>
+                        <p class="text-on-surface-variant max-w-md">One click creates your unique event portal. Print it on menus, signage, or table cards for seamless guest entry.</p>
+                    </div>
+                    <div class="absolute right-0 bottom-0 w-1/2 translate-y-8 translate-x-8 opacity-40 group-hover:translate-y-0 transition-transform duration-500">
+                        <img class="rounded-tl-2xl shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZxQazh2P7U2SomVL2RT6sKw72WM4P0y0ktld0bEYlEsxoczJLKZYAyQZf3ObTXgNLq8FN1I9HcKKF7dTjLNkQfRyeC7KBvJKfs8KDP8nOARbK_IM9te19Zw4jNBeuvKZzGiW647papuHwC89WW6QDwD8PXrUHqa7SFvmnLQh1ORKqFuujy-YQlmcOav48zINPpz7KPVd0M_iRKWU40uMlCEHGs32XmgMu5b3azxdKyDWb5lXanEY2S-EUAIZkxOvLCBLOfANp9p-X"/>
+                    </div>
+                </div>
+                <!-- Feature 2: No App -->
+                <div class="md:col-span-4 bg-primary text-on-primary p-10 rounded-xl flex flex-col justify-end relative overflow-hidden">
+                    <div class="absolute top-10 left-10">
+                        <span class="material-symbols-outlined text-[48px] opacity-20">install_mobile</span>
+                    </div>
+                    <h3 class="font-headline-lg text-headline-md mb-2">No App Install</h3>
+                    <p class="opacity-80 font-body-md">Your guests don't want another app. EventSnap works directly in any mobile browser.</p>
+                </div>
+                <!-- Feature 3: Live Slideshow -->
+                <div class="md:col-span-4 glass-card p-10 rounded-xl flex flex-col justify-between hover:border-primary/50 transition-colors">
+                    <span class="p-3 bg-tertiary/10 rounded-full text-tertiary mb-6 inline-block w-fit">
+                        <span class="material-symbols-outlined text-[32px]">tv</span>
+                    </span>
+                    <div>
+                        <h3 class="font-headline-lg text-headline-md mb-2">Live Slideshows</h3>
+                        <p class="text-on-surface-variant font-body-md">Stream guest photos in real-time to any screen or projector at the venue.</p>
+                    </div>
+                </div>
+                <!-- Feature 4: Secure Cloud -->
+                <div class="md:col-span-8 glass-card p-10 rounded-xl flex items-center gap-8 overflow-hidden">
+                    <div class="flex-1">
+                        <span class="p-3 bg-primary/10 rounded-full text-primary mb-6 inline-block">
+                            <span class="material-symbols-outlined text-[32px]">cloud_done</span>
+                        </span>
+                        <h3 class="font-headline-lg text-headline-md mb-2">Secure Cloud Gallery</h3>
+                        <p class="text-on-surface-variant font-body-md">Full-resolution backup of every photo. Private, encrypted, and available for download forever.</p>
+                    </div>
+                    <div class="hidden sm:grid grid-cols-2 gap-2 flex-1 rotate-3">
+                        <div class="space-y-2">
+                            <div class="h-20 bg-surface-container-highest rounded-lg"></div>
+                            <div class="h-32 bg-primary/20 rounded-lg"></div>
+                        </div>
+                        <div class="space-y-2 pt-8">
+                            <div class="h-32 bg-surface-container-highest rounded-lg"></div>
+                            <div class="h-20 bg-primary/20 rounded-lg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transactional Success Callout -->
+    <section class="py-24 max-w-7xl mx-auto px-gutter w-full">
+        <div class="relative glass-card rounded-xl p-12 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="relative z-10 space-y-6 md:w-1/2">
+                <h2 class="font-display-lg text-headline-lg text-on-surface">Ready to start snapping?</h2>
+                <p class="text-on-surface-variant text-body-lg">Join thousands of hosts who have simplified their event memories. Set up your first event in under 60 seconds.</p>
+                <div class="flex gap-4">
+                    <a href="<?php echo $isLoggedIn ? 'create-event.php' : 'register.php'; ?>" class="px-8 py-3 rounded-full bg-primary text-on-primary font-label-sm text-label-sm hover:opacity-90 shadow-lg shadow-primary/20 transition-all text-center text-decoration-none">Get Started Free</a>
+                    <a href="pricing.php" class="px-8 py-3 rounded-full border border-primary text-primary font-label-sm text-label-sm hover:bg-primary/5 transition-all text-center text-decoration-none">View Pricing</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="w-64 h-64 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container relative">
+                    <span class="material-symbols-outlined text-[96px]">party_mode</span>
+                    <div class="absolute top-0 right-0 p-4 bg-surface rounded-full shadow-lg animate-bounce">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 p-4 bg-surface rounded-full shadow-lg">
+                        <span class="material-symbols-outlined text-tertiary">star</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full mt-auto bg-surface-container-lowest border-t border-outline-variant/20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-gutter py-stack-lg max-w-7xl mx-auto w-full">
+            <div class="space-y-6">
+                <span class="font-headline-md text-headline-md font-bold text-primary">EventSnap</span>
+                <p class="text-on-surface-variant font-body-md">The smarter, faster way to collect and share event memories in high resolution.</p>
+                <div class="flex gap-4">
+                    <a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">public</span></a>
+                    <a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">camera</span></a>
+                    <a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">mail</span></a>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <p class="font-bold text-on-surface font-label-sm text-label-sm">Product</p>
+                    <ul class="space-y-2 list-none p-0">
+                        <li><a class="text-on-surface-variant hover:text-primary transition-colors text-body-md text-decoration-none" href="#">Product</a></li>
+                        <li><a class="text-on-surface-variant hover:text-primary transition-colors text-body-md text-decoration-none" href="#">Weddings</a></li>
+                        <li><a class="text-on-surface-variant hover:text-primary transition-colors text-body-md text-decoration-none" href="#">Corporate</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <p class="font-bold text-on-surface font-label-sm text-label-sm">Resources</p>
+                    <ul class="space-y-2 list-none p-0">
+                        <li><a class="text-on-surface-variant hover:text-primary transition-colors text-body-md text-decoration-none" href="#">Parties</a></li>
+                        <li><a class="text-on-surface-variant hover:text-primary transition-colors text-body-md text-decoration-none" href="<?php echo $isLoggedIn ? 'dashboard.php' : 'login.php'; ?>">Get the QR</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <p class="font-bold text-on-surface font-label-sm text-label-sm">Subscribe</p>
+                <div class="flex flex-col gap-2">
+                    <input class="px-4 py-3 bg-surface rounded-lg border border-outline-variant focus:border-primary outline-none transition-all" placeholder="Enter your email" type="email"/>
+                    <button class="px-4 py-3 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-opacity">Notify Me</button>
+                </div>
+                <p class="text-xs text-on-surface-variant">© <?php echo date('Y'); ?> EventSnap Cloud. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Micro-interaction for scroll effects
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+            }
+        });
+
+        // Simple intersection observer for reveal effects
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-8');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

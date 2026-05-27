@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EventSnap - Guest Upload</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "surface-container-high": "#dce9ff",
+                    "primary-fixed": "#e9ddff",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#494454",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#6d3bd7",
+                    "on-background": "#0b1c30",
+                    "on-primary-container": "#fffbff",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#5a4139",
+                    "on-primary-fixed": "#23005c",
+                    "primary": "#6b38d4",
+                    "secondary-fixed-dim": "#e3bfb4",
+                    "on-tertiary-container": "#fffbff",
+                    "secondary-container": "#fdd8cc",
+                    "on-tertiary-fixed-variant": "#673d00",
+                    "surface": "#f8f9ff",
+                    "surface-container": "#e5eeff",
+                    "secondary": "#745850",
+                    "on-secondary-fixed": "#2a1710",
+                    "surface-bright": "#f8f9ff",
+                    "inverse-primary": "#d0bcff",
+                    "tertiary": "#855000",
+                    "surface-variant": "#d3e4fe",
+                    "primary-container": "#8455ef",
+                    "tertiary-fixed-dim": "#ffb869",
+                    "secondary-fixed": "#ffdbd0",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#785c54",
+                    "surface-dim": "#cbdbf5",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "surface-container-low": "#eff4ff",
+                    "inverse-surface": "#213145",
+                    "outline": "#7b7486",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#a76500",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#5516be",
+                    "tertiary-fixed": "#ffdcbb",
+                    "on-tertiary-fixed": "#2c1700",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "outline-variant": "#cbc3d7",
+                    "primary-fixed-dim": "#d0bcff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "container-padding-desktop": "64px",
+                    "container-padding-mobile": "20px",
+                    "base": "8px",
+                    "stack-lg": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .bouncy-progress {
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col items-center">
+<!-- TopNavBar (Shared Component Reference) -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant/20 dark:border-outline/10 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
+<span class="font-display-lg text-display-lg font-extrabold text-primary dark:text-primary-fixed tracking-tight">EventSnap</span>
+<div class="flex items-center gap-stack-md">
+<button class="hidden md:block text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm">Dashboard</button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-sm text-label-sm hover:opacity-90 transition-all active:scale-95">Login</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="mt-24 w-full max-w-lg px-container-padding-mobile md:px-0 flex flex-col gap-stack-lg pb-stack-lg">
+<!-- Welcome Banner -->
+<header class="text-center space-y-2 py-4">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Welcome to Sarah &amp; Tom's Wedding</h1>
+<p class="text-on-surface-variant font-body-md">Capture the magic and share it with everyone!</p>
+</header>
+<!-- Primary Upload Action -->
+<section class="glass-card p-stack-lg rounded-xl shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border border-outline-variant/30 flex flex-col items-center gap-stack-md group cursor-pointer active:scale-95 transition-transform duration-200" onclick="document.getElementById('camera-input').click()">
+<div class="w-24 h-24 rounded-full bg-primary-container/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined !text-5xl" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">Tap to Take Photo</h2>
+<p class="text-on-surface-variant text-center font-body-md">Share a moment instantly from your camera</p>
+<input accept="image/*" capture="environment" class="hidden" id="camera-input" type="file"/>
+</section>
+<!-- Secondary Action -->
+<button class="w-full flex items-center justify-center gap-stack-sm bg-secondary-container/30 text-on-secondary-container py-4 px-stack-lg rounded-lg border border-secondary-container/50 hover:bg-secondary-container/50 transition-all font-headline-md text-headline-md active:scale-98" onclick="document.getElementById('gallery-input').click()">
+<span class="material-symbols-outlined">image</span>
+            Upload from Gallery
+            <input accept="image/*" class="hidden" id="gallery-input" multiple="" type="file"/>
+</button>
+<!-- Dynamic Upload Section (Hidden by default, shown via JS) -->
+<section class="hidden space-y-stack-md" id="upload-flow">
+<!-- Preview & Caption Area -->
+<div class="glass-card p-stack-md rounded-lg border border-outline-variant/30">
+<div class="flex gap-stack-md overflow-x-auto pb-stack-sm">
+<!-- Image Preview Item -->
+<div class="relative flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="A close-up photograph of a vibrant wedding reception table setting, featuring polished silverware and delicate crystal glasses that catch the soft, warm golden hour light. The atmosphere is elegant and celebratory, with out-of-focus floral arrangements in the background creating a soft bokeh effect. The color palette is dominated by creamy whites and rich gold accents, embodying a premium and joyful event aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIYk1pmMb3lWD5VXAtC0V9m22gFvgLs22WgSag0-wwSuCY4LhRfw_E3KLSsA4vExel4Ti6D_LVg1eGdad4FTTN5vmG7b03xMtkOfOW9ypsf39AkJpHPhQTz3-EVIYbYgPII9CNLGF-TG3jj5-TN8bxPOc-L6GYVurPxmiuHgp0pNXlpDXq4dOzpNFWTMeoQZPAUgZ7do5s0jMEDk3yM8vjsgwkfjhjLR8e87hvEvr4sTEuQoOd3hcHoVHSOcItnxDIVtaCJEWs2Sab"/>
+<button class="absolute top-1 right-1 bg-on-surface/80 text-surface rounded-full p-0.5 hover:bg-error transition-colors" title="Remove">
+<span class="material-symbols-outlined !text-sm">close</span>
+</button>
+</div>
+</div>
+<div class="mt-stack-md">
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-2" for="caption">ADD A CAPTION</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary placeholder:text-outline p-stack-sm text-body-md" id="caption" placeholder="Write something sweet..." rows="2"></textarea>
+</div>
+</div>
+<!-- Progress List -->
+<div class="space-y-stack-sm">
+<div class="flex justify-between items-center px-1">
+<span class="font-label-sm text-label-sm text-on-surface">Uploading 2 photos...</span>
+<span class="font-label-sm text-label-sm text-primary">85%</span>
+</div>
+<div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bouncy-progress h-full bg-gradient-to-r from-primary to-primary-container" style="width: 85%"></div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-lg font-headline-md text-headline-md shadow-lg shadow-primary/20 hover:translate-y-[-2px] transition-all active:scale-95">
+                Send to Gallery
+            </button>
+</section>
+<!-- Quick Gallery Preview (Static Demo) -->
+<section class="mt-stack-lg">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant mb-stack-sm tracking-widest uppercase">RECENTLY ADDED</h3>
+<div class="grid grid-cols-3 gap-2">
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="An artistic shot of a wedding ceremony aisle decorated with lush white roses and eucalyptus leaves. The morning light streams through large windows, creating a bright and airy feel. The perspective is from the ground looking up, emphasizing the grand scale of the floral arrangements against a minimalist, modern venue. The mood is serene, romantic, and high-end." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-B-kvsEWcYCM4HheHtha0A63IcWpTN3wnrIH7JSlVCCOWklJZrt01AuEAXAq-k3r61n-ckcljC3iHLXhMXLF2QPCm4Zb_VwYudQhTC_0vafn0_qvVe6Ih47e-CNVJlpdVQLs1yzdBuNRx8N8yeAbquYjGn9bpdAEyUw6RsAJ2J3Ts9iXYhpDnDRSuJ-8C9c1uNUWRktbzYFYMyZhD-kL8kTlIL7MGAfq3fT7IRLzR6i2Z7e8Jx9LSUfj53yMsPl7z_110Px7nn4bt"/>
+</div>
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A joyful group of friends laughing and toasted with champagne at an outdoor wedding celebration. The lighting is warm and golden, characteristic of a summer sunset. Everyone is dressed in sophisticated, colorful formal attire that pops against the blurred green landscape in the background. The image captures a candid, high-energy moment of pure happiness and celebration." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUf5WA9ERU7TlcDIQbascIeIVXuhsPmUOUR11yi1n8iXHXuPIYs8SJDo8993xL5yRnF1r-1hg9pb4Nvn86cPddCiLF4NoyWYbqWewHj0PRXFrTtOsElZ15nSSf7wtOouRDHAz6JLZ8p9m_ND76Lh7NnzEsd56ZoYBL1YMAPHjsmTATQcvmnVqaHsTr1nTMx4Aevlfn-Q-Dn7rvUTalyE5zKsOykOlAVj4TYWY8-vj3cYPB0W4NwX46lz75GmySXH_d4kn-0-2rRwAx"/>
+</div>
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover opacity-60" data-alt="A detailed shot of a three-tier wedding cake with minimalist white icing and a single sprig of lavender. The cake sits on a vintage silver pedestal in a room with soft, diffuse lighting. The background is a clean, neutral wall that allows the textures of the cake and the silver to stand out. The aesthetic is modern, elegant, and focused on clean lines and luxury details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA379EosL-WataC9UvtHh1I29oV-prO3SxB_l-e4RBuvH56g0gi--fU_Oo1JfcWB3cNlq50HsSZbivhpZFdRU5pLHLI_2Qc_TqVQe9BJbe7X5iRFPVnsD2NIjDkLA1A4eoWXLoUsFiwgkaWfBYF7ZEdpq9luA9yG6qw7sMgOeWdtEiPxkfUXxj2Fw8MuDyaCM6X2efpqIuwOyeQBwgWOMON0VykPw-e5fltkiwnVA9lRoixaDy1WPZHEPawSz8EMHlFRqpi-wcF8dhB"/>
+<div class="absolute inset-0 flex items-center justify-center font-label-sm text-label-sm text-on-surface font-bold">+12</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component Reference) -->
+<footer class="w-full mt-auto bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant/20">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg px-gutter py-stack-lg max-w-7xl mx-auto items-center">
+<div class="flex flex-col gap-2">
+<span class="font-headline-md text-headline-md font-bold text-primary">EventSnap</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 EventSnap Cloud. All rights reserved.</p>
+</div>
+<div class="flex gap-stack-md justify-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Product</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Weddings</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Corporate</a>
+</div>
+<div class="flex justify-center md:justify-end">
+<button class="flex items-center gap-2 text-primary font-semibold underline decoration-2 underline-offset-4 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">qr_code_2</span>
+                    Get the QR
+                </button>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction logic -->
+<script>
+        const cameraInput = document.getElementById('camera-input');
+        const galleryInput = document.getElementById('gallery-input');
+        const uploadFlow = document.getElementById('upload-flow');
+
+        function showUploadFlow() {
+            uploadFlow.classList.remove('hidden');
+            uploadFlow.scrollIntoView({ behavior: 'smooth' });
+            // Add a little celebratory pulse
+            uploadFlow.classList.add('animate-pulse');
+            setTimeout(() => uploadFlow.classList.remove('animate-pulse'), 1000);
+        }
+
+        cameraInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) showUploadFlow();
+        });
+
+        galleryInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) showUploadFlow();
+        });
+    </script>
+</body></html>
